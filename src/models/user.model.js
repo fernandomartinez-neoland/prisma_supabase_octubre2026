@@ -7,7 +7,7 @@ export async function registerUserModel(email, name, username, password) {
     username,
     password,
   });
-  await db.close();
+
   return ok;
 }
 
