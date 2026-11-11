@@ -11,3 +11,24 @@ export function registerUserService(body) {
 
   return registerUserModel(email, name, username, password);
 }
+
+export async function loginService(req) {
+  const { email, password } = req.body;
+  const user = await getUserModel(email);
+  if (user) {
+    const pass = await bcrypt.compare(password, user.password);
+    if (pass) {
+      return {
+        status: 200,
+        message: user,
+      };
+    } else {
+      return { status: 401, message: "usuario o clave incorrecto" };
+    }
+  } else {
+    return {
+      status: 401,
+      message: "usuario o clave incorrecto",
+    };
+  }
+}
